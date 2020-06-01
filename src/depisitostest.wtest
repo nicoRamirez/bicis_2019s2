@@ -1,0 +1,56 @@
+import bicis.*
+import accesorios.*
+import depositos.*
+
+test "testDepositos" {
+	const deposito1 = new Depositos()
+	const bici1 = new BicisConAccesorios()
+	bici1.rodado(28)
+	bici1.largoCent(150)
+	bici1.marca("olmo")
+	bici1.agregarAccesorios(farolito)
+	assert.equals(85,bici1.altura())
+	assert.equals(34,bici1.velocidadCrucero())
+	assert.equals(0,bici1.carga())
+	assert.equals(14.5,bici1.peso())
+	assert.that(bici1.tieneLuz())
+	assert.equals(1,bici1.cantAccesLiviano())
+	const bici2 = new BicisConAccesorios()
+	bici2.rodado(26)
+	bici2.largoCent(110)
+	bici2.marca("legnano")
+	bici2.agregarAccesorios(farolito)
+	const canasto1 = new Canasto()
+	canasto1.volumen(8)
+	bici2.agregarAccesorios(canasto1)
+	const morral1 = new MorrarDeBici()
+	morral1.largo(21)
+	morral1.ojoDeGato(conOjoDeGato)
+	bici2.agregarAccesorios(morral1)
+	assert.equals(80,bici2.altura())
+	assert.equals(28,bici2.velocidadCrucero())
+	assert.equals(23,bici2.carga())
+	assert.equals(15.5,bici2.peso())
+	assert.that(bici2.tieneLuz())
+	assert.equals(2,bici2.cantAccesLiviano())
+	const bici3 = new BicisConAccesorios()
+	bici3.rodado(20)
+	bici3.largoCent(90)
+	bici3.marca("legnano")
+	const morral2 = new MorrarDeBici()
+	morral2.largo(6)
+	bici3.agregarAccesorios(morral2)
+	deposito1.agregarBicis(bici1)
+	deposito1.agregarBicis(bici2)
+	deposito1.agregarBicis(bici3)
+	
+	assert.equals([bici1,bici2],deposito1.bicisRapidas())
+	assert.notThat(deposito1.depositoNocturno())
+	assert.that(deposito1.llevarUnaCarga(10))
+	assert.notThat(deposito1.llevarUnaCarga(50))
+	
+	deposito1.quitarBicis(bici3)
+	assert.that(deposito1.depositoNocturno())
+	
+
+}
